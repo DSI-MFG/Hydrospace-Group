@@ -2860,17 +2860,8 @@ function setWorkPlane(abc) {
   writeInitialPositioning(initialPosition, isRequired, myVar1, myVar2);
 */
 function writeInitialPositioning(position, isRequired, codes1, codes2) {
-  var motionCode = { single: 0, multi: 0 };
-  switch (highFeedMapping) {
-    case HIGH_FEED_MAP_ANY:
-      motionCode = { single: 1, multi: 1 }; // map all rapid traversals to high feed
-      break;
-    case HIGH_FEED_MAP_MULTI:
-      motionCode = { single: 0, multi: 1 }; // map rapid traversal along more than one axis to high feed
-      break;
-  }
-  var feed =
-    highFeedMapping != HIGH_FEED_NO_MAPPING ? getFeed(highFeedrate) : "";
+  var motionCode = { single: 1, multi: 1 }; // Always use G01 for initial positioning
+  var feed = "F500"; // Hard code F500 for initial positioning
   var hOffset = getSetting("outputToolLengthOffset", true)
     ? hFormat.format(tool.lengthOffset)
     : "";
